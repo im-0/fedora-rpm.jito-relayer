@@ -1,0 +1,37 @@
+[Unit]
+Description=Jito Foundation's Transaction Relayer %i
+
+Wants=network-online.target
+After=network-online.target
+
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=jito-relayer
+Group=jito-relayer
+
+PrivateTmp=yes
+DeviceAllow=/dev/null rw
+DeviceAllow=/dev/random r
+DeviceAllow=/dev/urandom r
+ProtectHome=yes
+ProtectSystem=strict
+MemoryDenyWriteExecute=true
+
+EnvironmentFile=-/etc/jito-relayer/%i.conf
+
+Type=simple
+
+LogRateLimitIntervalSec=0
+
+ExecStart=/opt/jito-relayer/bin/jito-transaction-relayer \
+        --keypair-path /etc/jito-relayer/%i.json \
+        --signing-key-pem-path /etc/jito-relayer/%i-private.pem \
+        --verifying-key-pem-path /etc/jito-relayer/%i-public.pem \
+        $ARGS
+
+Restart=always
+RestartSec=1
