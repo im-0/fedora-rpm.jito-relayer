@@ -135,7 +135,7 @@ exit 0
 
 
 %postun
-%systemd_postun_with_restart 'jito-transaction-relayer@*.service'
+%systemd_postun 'jito-transaction-relayer@*.service'
 
 
 %changelog
