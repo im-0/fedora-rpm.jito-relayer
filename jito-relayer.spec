@@ -7,7 +7,7 @@
 %global target_cpu_mtune generic
 
 Name:       jito-relayer
-Version:    0.1.12
+Version:    0.1.13
 Release:    1%{?dist}
 Summary:    Jito Foundation's Transaction Relayer
 
@@ -139,6 +139,9 @@ exit 0
 
 
 %changelog
+* Mon Apr 29 2024 Ivan Mironov <mironov.ivan@gmail.com> - 0.1.13-1
+- Update to 0.1.13
+
 * Wed Apr 17 2024 Ivan Mironov <mironov.ivan@gmail.com> - 0.1.12-1
 - Update to 0.1.12
 
