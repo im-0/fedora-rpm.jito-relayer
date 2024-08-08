@@ -7,7 +7,7 @@
 %global target_cpu_mtune generic
 
 Name:       jito-relayer
-Version:    0.1.15
+Version:    0.2.0
 Release:    1%{?dist}
 Summary:    Jito Foundation's Transaction Relayer
 
@@ -28,6 +28,8 @@ Source1:    %{name}-%{version}.cargo-vendor.tar.xz
 Source100:  config.toml
 Source101:  jito-transaction-relayer@.service
 Source102:  example.conf
+
+Patch0: 0001-cargo-update-to-fix-build-with-rust-1.80.0.patch
 
 ExclusiveArch:  %{rust_arches}
 
@@ -52,6 +54,8 @@ validators.
 %prep
 %setup -q -D -T -b0 -n %{name}-%{version}
 %setup -q -D -T -b1 -n %{name}-%{version}
+
+%patch -P 0 -p1
 
 mkdir .cargo
 cp %{SOURCE100} .cargo/config.toml
@@ -139,6 +143,9 @@ exit 0
 
 
 %changelog
+* Thu Aug 8 2024 Ivan Mironov <mironov.ivan@gmail.com> - 0.2.0-1
+- Update to 0.2.0
+
 * Tue Jul 16 2024 Ivan Mironov <mironov.ivan@gmail.com> - 0.1.15-1
 - Update to 0.1.15
 
