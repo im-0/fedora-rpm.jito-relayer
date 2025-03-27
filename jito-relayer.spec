@@ -7,7 +7,7 @@
 %global target_cpu_mtune generic
 
 Name:       jito-relayer
-Version:    0.2.0
+Version:    0.3.1
 Release:    1%{?dist}
 Summary:    Jito Foundation's Transaction Relayer
 
@@ -29,7 +29,7 @@ Source100:  config.toml
 Source101:  jito-transaction-relayer@.service
 Source102:  example.conf
 
-Patch0: 0001-cargo-update-to-fix-build-with-rust-1.80.0.patch
+Patch0: fix-rocksdb-on-fedora-42.patch
 
 ExclusiveArch:  %{rust_arches}
 
@@ -81,7 +81,7 @@ sed -i "s,^\( *lto *= *\"\)thin\(\" *\)$,\1fat\2," Cargo.toml
 export RUSTC_BOOTSTRAP=1
 
 %ifarch x86_64
-%global cpu_cflags -march=%{target_cpu} -mtune=%{target_cpu_mtune}
+%global cpu_cflags -march=%{target_cpu} -mtune=%{target_cpu_mtune} -mpclmul
 %global cpu_rustflags -Ctarget-cpu=%{target_cpu}
 
 export RUSTFLAGS='%{build_rustflags} -Ccodegen-units=1 -Copt-level=3 %{cpu_rustflags}'
@@ -143,6 +143,9 @@ exit 0
 
 
 %changelog
+* Thu Mar 27 2025 Ivan Mironov <mironov.ivan@gmail.com> - 0.3.1-1
+- Update to 0.3.1
+
 * Thu Aug 8 2024 Ivan Mironov <mironov.ivan@gmail.com> - 0.2.0-1
 - Update to 0.2.0
 
